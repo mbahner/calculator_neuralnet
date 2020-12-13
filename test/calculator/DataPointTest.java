@@ -19,9 +19,6 @@ class DataPointTest {
 	// 
 	// Test hashCode:
 	//
-	// 
-	//
-	//
 	//
 	
 	@Test
@@ -39,9 +36,29 @@ class DataPointTest {
 	@Test
 	public void testHammingSuccess() {
 		DataPoint point = new DataPoint(8, 7, 4);
+		System.out.println(point);
 		boolean[] zeroHam = {true, true, true, true};
 		int result = point.getHammingDistance(zeroHam);
 		assertEquals(0, result, "expected hamming distance to be 0");
 	}
 	
+	// covered cases:
+	//     distance = len(string)
+	@Test
+	public void testWorstDistance() {
+		DataPoint point = new DataPoint(8, 7, 4);
+		boolean[] zeroHam = {false, false, false, false};
+		int result = point.getHammingDistance(zeroHam);
+		assertEquals(4, result, "expected hamming distance to be 4");
+	}
+	
+	// covered cases:
+	//    0 < distance < len(string)
+	@Test
+	public void testMiddleHamming() {
+		DataPoint point = new DataPoint(8, 7, 4);
+		boolean[] zeroHam = {false, true, false, false};
+		int result = point.getHammingDistance(zeroHam);
+		assertEquals(3, result, "expected hamming distance to be 3");
+	}
 }

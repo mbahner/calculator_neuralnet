@@ -10,6 +10,10 @@ public class DataPoint {
 	private final boolean[] num2;
 	private final boolean[] sum;
 	
+	private final int intNum1;
+	private final int intNum2;
+	private final int intSum;
+	
 	/**
 	 * Make a random data point
 	 * @param bitCount
@@ -19,13 +23,13 @@ public class DataPoint {
 		
 		this.bitLength = bitCount;
 		
-		int n1 = (int)(Math.pow(2, bitCount) * Math.random());
-		int n2 = (int)((Math.pow(2, bitCount) - n1) * Math.random());
-		int s = n1 + n2;
+		this.intNum1 = (int)(Math.pow(2, bitCount) * Math.random());
+		this.intNum2 = (int)((Math.pow(2, bitCount) - this.intNum1) * Math.random());
+		this.intSum = this.intNum1 + this.intNum2;
 		
-		this.num1 = this.toBinary(n1);
-		this.num2 = this.toBinary(n2);
-		this.sum = this.toBinary(s);
+		this.num1 = this.toBinary(this.intNum1);
+		this.num2 = this.toBinary(this.intNum2);
+		this.sum = this.toBinary(this.intSum);
 	}
 	
 	/**
@@ -40,6 +44,10 @@ public class DataPoint {
 		assert n2 >= 0;
 		
 		this.bitLength = bitLength;
+		this.intNum1 = n1;
+		this.intNum2 = n2;
+		this.intSum = n1 + n2;
+		
 		this.num1 = this.toBinary(n1);
 		this.num2 = this.toBinary(n2);
 		this.sum = this.toBinary(n1 + n2);
@@ -61,8 +69,6 @@ public class DataPoint {
 		}
 		return hammingDistance;
 	}
-	
-	
 	
 	///////////////////////////////////////
 	// Begin private and overide methods //
@@ -89,12 +95,13 @@ public class DataPoint {
 	
 	@Override
 	public int hashCode() {
-		throw new UnsupportedOperationException();
+		String resString = "" + this.intNum1 + this.intNum2 + this.intSum + this.bitLength;
+		return Integer.valueOf(resString);
 	}
 	
 	@Override
 	public boolean equals(Object that) {
-		throw new UnsupportedOperationException();
+		return that instanceof DataPoint && this.toString().equals(that.toString());
 	}
 	
 	@Override
@@ -105,7 +112,7 @@ public class DataPoint {
 	private String bitsToString(boolean[] bits) {
 		String res = "[";
 		for (boolean bit: bits) {
-			res += bit + ", ";
+			res += (bit ? "1" : "0") + ", ";
 		}
 		res += "]";
 		return res;
